@@ -12,6 +12,7 @@ require (
 	github.com/mattn/go-runewidth v0.0.15 // indirect
 	github.com/mattn/go-shellwords v1.0.12 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
+	golang.org/x/exp v0.0.0-20240531132922-fd00a4e0eefc // indirect
 	golang.org/x/sys v0.20.0 // indirect
 	golang.org/x/term v0.20.0 // indirect
 	golang.org/x/text v0.14.0 // indirect

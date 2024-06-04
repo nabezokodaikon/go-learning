@@ -13,9 +13,17 @@ const wasmInstance = await WebAssembly.instantiate(wasmModule, go.importObject);
 
 go.run(wasmInstance);
 
-const array: Array<Animal> = [{Name: "aaa", Hoge: 1}, {Name: "bbb", Hoge: 2}]
-const length = array.length;
-const params = [length, ...array]
-const result = (globalThis as any).structure(...params);
+// Structure
+//const array: Array<Animal> = [{Name: "aaa", Hoge: 1}, {Name: "bbb", Hoge: 2}]
+//const length = array.length;
+//const params = [length, ...array]
+//const result = (globalThis as any).structure(...params);
+
+// Record
+const record: Record<number, string> = { 222: "foo" };
+//console.log(record[222]);
+const params = [record];
+const result: Record<number, string> = (globalThis as any).record(...params);
+
 console.log(result);
 

@@ -3,15 +3,22 @@ package main
 import (
   "encoding/json"
   // "fmt"
+  "golang.org/x/exp/maps"
   // "github.com/junegunn/fzf/src/algo"
   // "github.com/junegunn/fzf/src/util"
   // "strconv"
+  "strconv"
   "syscall/js"
 )
 
 type Animal struct {
   Name string
   Hoge int
+}
+
+type Record struct {
+  int
+  string
 }
 
 func structure(this js.Value, args []js.Value) interface{} {
@@ -31,9 +38,22 @@ func structure(this js.Value, args []js.Value) interface{} {
   return jsArray
 }
 
+func record(this js.Value, args []js.Value) interface{} {
+  v := args[0]
+  str := js.Global().Get("JSON").Call("stringify", v).String()
+  var dst map[int]string
+  json.Unmarshal([]byte(str), &dst)
+  keys := maps.Keys(dst)
+  key := int(keys[0])
+  jsObj := js.Global().Get("Object").New()
+  jsObj.Set(strconv.Itoa(key), dst[key])
+  return jsObj
+}
+
 func main() {
   c := make(chan struct{}, 0)
-  js.Global().Set("structure", js.FuncOf(structure))
+  // js.Global().Set("structure", js.FuncOf(structure))
+  js.Global().Set("record", js.FuncOf(record))
   <-c
 
   // input := util.RunesToChars([]rune("github.com/wantedly/wantedly"))
