@@ -14,11 +14,11 @@ type Animal struct {
   Hoge int
 }
 
-func find(this js.Value, args []js.Value) interface{} {
-  length := args[1].Int()
+func structure(this js.Value, args []js.Value) interface{} {
+  length := args[0].Int()
   jsArray := js.Global().Get("Array").New(length)
   for i := 0; i < length; i++ {
-    v := args[i + 2];
+    v := args[i + 1];
     str := js.Global().Get("JSON").Call("stringify", v).String()
     var dst Animal
     json.Unmarshal([]byte(str), &dst)
@@ -33,7 +33,7 @@ func find(this js.Value, args []js.Value) interface{} {
 
 func main() {
   c := make(chan struct{}, 0)
-  js.Global().Set("find", js.FuncOf(find))
+  js.Global().Set("structure", js.FuncOf(structure))
   <-c
 
   // input := util.RunesToChars([]rune("github.com/wantedly/wantedly"))
